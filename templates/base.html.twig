@@ -6,14 +6,30 @@
         {# Run `composer require symfony/webpack-encore-bundle`
            and uncomment the following Encore helpers to start using Symfony UX #}
         {% block stylesheets %}
-            {#{{ encore_entry_link_tags('app') }}#}
+            <link rel="stylesheet" href="{{ asset('bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
+            <link rel="stylesheet" href="{{ asset('bower_components/font-awesome/css/font-awesome.min.css')}}">
+  	        <link rel="stylesheet" href="{{ asset('dist/css/AdminLTE.min.css')}}">
+            <link rel="stylesheet" href="{{ asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
+            <link rel="stylesheet" href="{{ asset('bower_components/bootstrap-daterangepicker/daterangepicker.css')}}">
+            <link rel="stylesheet" href="{{ asset('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
+            <link rel="stylesheet" href="{{ asset('dist/css/skins/_all-skins.min.css')}}">
+            
         {% endblock %}
 
         {% block javascripts %}
-            {#{{ encore_entry_script_tags('app') }}#}
+<script src="{{ asset('bower_components/jquery/dist/jquery.min.js')}}"></script>
+<script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
+<script src="{{ asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+<script src="{{ asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+<script src="{{ asset('bower_components/jquery-slimscroll/jquery.slimscroll.min.js')}}"></script>
+<script src="{{ asset('bower_components/fastclick/lib/fastclick.js')}}"></script>
+<script src="{{ asset('dist/js/adminlte.min.js')}}"></script>
+
         {% endblock %}
     </head>
     <body>
         {% block body %}{% endblock %}
+        
     </body>
+    
 </html>
