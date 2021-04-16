@@ -1,3 +1,6 @@
 index:
     path: /index
     controller: App\Controller\HomeController::index
+admin/login:
+    path: admin/login
+    controller: App\Controller\AdminLoginController::index
