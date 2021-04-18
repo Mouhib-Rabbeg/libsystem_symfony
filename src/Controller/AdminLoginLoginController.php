@@ -28,8 +28,8 @@ class AdminLoginLoginController extends AbstractController
                 'username' => $username,
                
             ]);
-        if($user){
-            if(password_verify($password, $user->getPassword())){
+        if($admin){
+            if(password_verify($password, $admin->getPassword())){
 				$this->get('session')->set('admin', $admin);
                 $this->get('session')->set('admin-error', '');
                 return $this->redirectToRoute('admin/dashboard');

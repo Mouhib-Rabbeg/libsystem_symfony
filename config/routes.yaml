@@ -7,3 +7,8 @@ admin/login:
 admin/dashboard:
     path: admin/dashboard
     controller: App\Controller\AdminDashboardController::index
+
+admin/cartegory:
+    path: admin/cartegory
+    controller: App\Controller\CategoryController::index
+    
