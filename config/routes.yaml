@@ -4,3 +4,6 @@ index:
 admin/login:
     path: admin/login
     controller: App\Controller\AdminLoginController::index
+admin/dashboard:
+    path: admin/dashboard
+    controller: App\Controller\AdminDashboardController::index

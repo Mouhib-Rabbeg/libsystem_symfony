@@ -17,16 +17,12 @@ class AdminLoginLoginController extends AbstractController
     public function index(): Response
     {
 
-
-    
-
-
         $request = Request::createFromGlobals();
         $username = $request->request->get('username', 'default category');
         $password = $request->request->get('password', 'default category');
         
 
-        $user = $this->getDoctrine()
+        $admin = $this->getDoctrine()
             ->getRepository(Admin::class)
             ->findOneBy([
                 'username' => $username,
@@ -34,9 +30,9 @@ class AdminLoginLoginController extends AbstractController
             ]);
         if($user){
             if(password_verify($password, $user->getPassword())){
-				$this->get('session')->set('admin', $user);
+				$this->get('session')->set('admin', $admin);
                 $this->get('session')->set('admin-error', '');
-                return $this->redirectToRoute('index');
+                return $this->redirectToRoute('admin/dashboard');
 			} else {
                 
                 $this->get('session')->set('admin-error', 'check credentials');
