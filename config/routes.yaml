@@ -8,8 +8,8 @@ admin/dashboard:
     path: admin/dashboard
     controller: App\Controller\AdminDashboardController::index
 
-admin/cartegory:
-    path: admin/cartegory
+admin/category:
+    path: admin/category
     controller: App\Controller\CategoryController::index
 admin/books:
     path: admin/books

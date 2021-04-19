@@ -111,6 +111,7 @@ class BookController extends AbstractController
         return $this->redirectToRoute('admin/books');
 
     }
+    
     /**
      * @Route("admin/books/add", name="book_add" , methods={"POST"})
      */

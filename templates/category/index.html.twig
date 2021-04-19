@@ -95,8 +95,8 @@
               <h4 class="modal-title"><b>Edit Category</b></h4>
             </div>
             <div class="modal-body">
-              <form class="form-horizontal" >
-                <input type="hidden" class="catid" name="id">
+              <form class="form-horizontal" method="POST" action="category/edit" >
+                <input type="hidden" class="catid" name="id" id="id">
                 <div class="form-group">
                     <label for="edit_name" class="col-sm-3 control-label">Name</label>
 
@@ -133,7 +133,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
-              <button type="button" id="delet_me"class="btn btn-danger btn-flat" name="delete"><i class="fa fa-trash"></i> Delete</button>
+              <button type="button" id="confirm"class="btn btn-danger btn-flat" name="delete"><i class="fa fa-trash"></i> Delete</button>
               </form>
             </div>
         </div>
@@ -151,8 +151,12 @@ $(function(){
     e.preventDefault();
     $('#edit').modal('show');
     var id = $(this).data('id');
-
     
+    $.get( "http://127.0.0.1:8000/admin/category/"+id, function( data ) {
+       
+        $('#edit_name').val(data.category[0].name);
+        $('#id').val(data.category[0].id);
+});
     
   });
 
@@ -161,7 +165,16 @@ $(function(){
     $('#delete').modal('show');
     var id = $(this).data('id');
     
-    
+    $('#confirm').on('click',function(e){
+      
+        $.ajax({
+    url: ' http://127.0.0.1:8000/admin/category/delete/'+id,
+    type: 'DELETE',
+    success: function(result) {
+        location.reload(true);
+    }
+});
+    })
    
     
   });

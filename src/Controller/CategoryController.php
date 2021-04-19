@@ -47,23 +47,44 @@ class CategoryController extends AbstractController
         ]);
     }
 
+
     /**
-     * @Route("admin/category/edit/{id}/{name}", methods={"GET","HEAD"} )
+     * @Route("admin/category/{id}", name="category_row" , methods={"GET"})
      */
-    public function edit_cat(String $name,string $id): Response
-    {
+    public function getCategoryRow(string $id): Response{
 
         $entityManager = $this->getDoctrine()->getManager();
-            $conn = $entityManager->getConnection(); 
-           
-            
-            $sql = "UPDATE category SET name = '$name' WHERE id = '$id'";
-            $stmt = $conn->prepare($sql);
-            $stmt->execute();
-            
+        $conn = $entityManager->getConnection(); 
+       
 
-            //return $this->redirectToRoute('admin/category');
-            return $this->redirect('http://127.0.0.1:8000/admin/category');
+        $sql = "SELECT * FROM category WHERE id = '$id'";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $book = $stmt->fetchAllAssociative(); 
+        
+        return $this->json(['category' => $book]);
+    }
+
+
+    /**
+     * @Route("admin/category/edit", name="category_edit" , methods={"POST"})
+     */
+    public function editBook(Request $request): Response{
+        
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $conn = $entityManager->getConnection(); 
+
+        $id = $request->get('id');
+		$name = $request->get('name');
+		
+        
+        $sql = "UPDATE category SET name = '$name' WHERE id = '$id'";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+       
+        return $this->redirectToRoute('admin/category'); 
+        
     }
 
 
@@ -89,6 +110,19 @@ class CategoryController extends AbstractController
         return $this->redirect('http://127.0.0.1:8000/admin/category');
     }
 
-    
+    /**
+     * @Route("admin/category/delete/{id}", name="category_delete" , methods={"DELETE"})
+     */
+    public function deleteBook(string $id){
+        $entityManager = $this->getDoctrine()->getManager();
+        $conn = $entityManager->getConnection(); 
+
+        $sql = "DELETE FROM category WHERE id = '$id'";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+
+        return $this->redirectToRoute('admin/category');
+
+    }
     
 }
