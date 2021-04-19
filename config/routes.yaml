@@ -14,4 +14,11 @@ admin/category:
 admin/books:
     path: admin/books
     controller: App\Controller\BooksController::index
+admin/transaction/borrow:
+    path: admin/transaction/borrow
+    controller: App\Controller\TransactionBorrowController::index
+    
+admin/transaction/return:
+    path: admin/transaction/return
+    controller: App\Controller\TransactionReturnController::index
     
