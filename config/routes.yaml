@@ -11,4 +11,7 @@ admin/dashboard:
 admin/cartegory:
     path: admin/cartegory
     controller: App\Controller\CategoryController::index
+admin/books:
+    path: admin/books
+    controller: App\Controller\BooksController::index
     

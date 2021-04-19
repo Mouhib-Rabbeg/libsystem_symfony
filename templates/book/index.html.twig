@@ -1,0 +1,352 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Books{% endblock %}
+
+{% block body %}
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+    {{ include('includes/admin_navbar.html.twig') }}
+    {{ include('includes/admin_menubar.html.twig') }}
+
+  <div class="content-wrapper">
+    
+    <section class="content-header">
+      <h1>
+        Book List
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li>Books</li>
+        <li class="active">Book List</li>
+      </ol>
+    </section>
+    
+    <section class="content">
+      {# <?php
+        if(isset($_SESSION['error'])){
+          echo "
+            <div class='alert alert-danger alert-dismissible'>
+              <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+              <h4><i class='icon fa fa-warning'></i> Error!</h4>
+              ".$_SESSION['error']."
+            </div>
+          ";
+          unset($_SESSION['error']);
+        }
+        if(isset($_SESSION['success'])){
+          echo "
+            <div class='alert alert-success alert-dismissible'>
+              <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+              <h4><i class='icon fa fa-check'></i> Success!</h4>
+              ".$_SESSION['success']."
+            </div>
+          ";
+          unset($_SESSION['success']);
+        }
+      ?> #}
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header with-border">
+              <a href="#addnew" data-toggle="modal" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus"></i> New</a>
+              <div class="box-tools pull-right">
+                <form class="form-inline">
+                  <div class="form-group">
+                    <label>Category: </label>
+                    <select class="form-control input-sm" id="select_category">
+                      <option value="0">ALL</option>
+                      {% for cat in cats %}
+						{% if cat.id == catId%}
+							<option value={{cat.id}} selected>{{cat.name}}</option>
+							{% else %}
+							<option value={{cat.id}}>{{cat.name}}</option>
+						{% endif %}
+					
+					{% endfor %}
+                      
+                    </select>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="box-body">
+              <table id="example1" class="table table-bordered">
+                <thead>
+                  
+                  <th>ISBN</th>
+                  <th>Title</th>
+                  <th>Author</th>
+                  <th>Publisher</th>
+                  <th>Status</th>
+                  <th>Tools</th>
+                </thead>
+                <tbody>
+                  
+                  {% for book in books %}
+        						<tr>
+									
+									<td>{{book.isbn}}</td>
+									<td>{{book.title}}</td>
+									<td>{{book.author}}</td>
+									<td>{{book.publisher}}</td>
+									<td>
+									{% if book.status == 0 %}
+										<span class="label label-success">available</span>
+										{% else %}
+										<span class="label label-danger">not available</span>
+									{% endif %}
+    						
+									</td>
+                                    <td>
+                            <button class='btn btn-success btn-sm edit btn-flat'  data-id="{{book.id}}"><i class='fa fa-edit'></i> Edit</button>
+                            <button class='btn btn-danger btn-sm delete btn-flat'  data-id="{{book.id}}"><i class='fa fa-trash'></i> Delete</button>
+                          </td>
+								</tr>
+    				{% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>   
+  </div>
+  <!-- Add -->
+<div class="modal fade" id="addnew">
+    <div class="modal-dialog">
+        <div class="modal-content">
+          	<div class="modal-header">
+            	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              		<span aria-hidden="true">&times;</span></button>
+            	<h4 class="modal-title"><b>Add New Book</b></h4>
+          	</div>
+          	<div class="modal-body">
+            	<form class="form-horizontal" method="POST" action="book_crud/book_add.php">
+          		  <div class="form-group">
+                  	<label for="isbn" class="col-sm-3 control-label">ISBN</label>
+
+                  	<div class="col-sm-9">
+                    	<input type="text" class="form-control" id="isbn" name="isbn" required>
+                  	</div>
+                </div>
+                <div class="form-group">
+                    <label for="title" class="col-sm-3 control-label">Title</label>
+
+                    <div class="col-sm-9">
+                      <textarea class="form-control" name="title" id="title" required></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="category" class="col-sm-3 control-label">Category</label>
+
+                    <div class="col-sm-9">
+                      <select class="form-control" name="category" id="category" required>
+                        <option value="" selected>- Select -</option>
+                        {% for cat in cats %}
+						
+							<option value={{cat.id}} >{{cat.name}}</option>
+							
+						
+					
+					{% endfor %}
+                        
+                      </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="author" class="col-sm-3 control-label">Author</label>
+
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="author" name="author">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="publisher" class="col-sm-3 control-label">Publisher</label>
+
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="publisher" name="publisher">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="datepicker_add" class="col-sm-3 control-label">Publish Date</label>
+
+                    <div class="col-sm-9">
+                      <div class="date">
+                        <input type="text" class="form-control" id="datepicker_add" name="pub_date">
+                      </div>
+                    </div>
+                </div>
+          	</div>
+          	<div class="modal-footer">
+            	<button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
+            	<button type="submit" class="btn btn-primary btn-flat" name="add"><i class="fa fa-save"></i> Save</button>
+            	</form>
+          	</div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit -->
+<div class="modal fade" id="edit">
+    <div class="modal-dialog">
+        <div class="modal-content">
+          	<div class="modal-header">
+            	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              		<span aria-hidden="true">&times;</span></button>
+            	<h4 class="modal-title"><b>Edit Book</b></h4>
+          	</div>
+          	<div class="modal-body">
+            	<form class="form-horizontal" method="POST" action="books/edit">
+            		<input type="hidden" class="bookid" name="id">
+                <div class="form-group">
+                    <label for="edit_isbn" class="col-sm-3 control-label">ISBN</label>
+
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="edit_isbn" name="isbn">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="edit_title" class="col-sm-3 control-label">Title</label>
+
+                    <div class="col-sm-9">
+                      <textarea class="form-control" name="title" id="edit_title"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="category" class="col-sm-3 control-label">Category</label>
+
+                    <div class="col-sm-9">
+                      <select class="form-control" name="category" id="category">
+                        <option value="" selected id="catselect"></option>
+                        {% for cat in cats %}
+						
+							<option value={{cat.id}} >{{cat.name}}</option>
+							
+					{% endfor %}
+                        
+                      </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="edit_author" class="col-sm-3 control-label">Author</label>
+
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="edit_author" name="author">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="edit_publisher" class="col-sm-3 control-label">Publisher</label>
+
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="edit_publisher" name="publisher">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="datepicker_edit" class="col-sm-3 control-label">Publish Date</label>
+
+                    <div class="col-sm-9">
+                      <div class="date">
+                        <input type="text" class="form-control" id="datepicker_edit" name="pub_date">
+                      </div>
+                    </div>
+                </div>
+          	</div>
+          	<div class="modal-footer">
+            	<button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
+            	<button type="submit" class="btn btn-success btn-flat" name="edit"><i class="fa fa-check-square-o"></i> Update</button>
+            	</form>
+          	</div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="delete">
+    <div class="modal-dialog">
+        <div class="modal-content">
+          	<div class="modal-header">
+            	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              		<span aria-hidden="true">&times;</span></button>
+            	<h4 class="modal-title"><b>Deleting...</b></h4>
+          	</div>
+          	<div class="modal-body">
+            	<form class="form-horizontal" >
+            		<input type="hidden" class="bookid" name="id">
+            		<div class="text-center">
+	                	<p>DELETE BOOK</p>
+	                	<h2 id="del_book" class="bold"></h2>
+	            	</div>
+          	</div>
+          	<div class="modal-footer">
+            	<button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
+            	<button type="button" id="confirm" class="btn btn-danger btn-flat" name="delete"><i class="fa fa-trash"></i> Delete</button>
+            	</form>
+          	</div>
+        </div>
+    </div>
+</div>
+
+
+       
+  {{ include('includes/admin_footer.html.twig') }}
+ 
+</div>
+<script>
+$(function(){
+  $('#select_category').change(function(){
+    var value = $(this).val();
+    if(value == 0){
+      window.location = 'books';
+    }
+    else{
+      window.location = 'books?category='+value;
+    }
+  });
+});
+
+$(document).on('click', '.edit', function(e){
+    e.preventDefault();
+    $('#edit').modal('show');
+    var id = $(this).data('id');
+    
+    $.get( "http://127.0.0.1:8000/admin/books/"+id, function( data ) {
+       
+        $('.bookid').val(data.book[0].bookid);
+      $('#edit_isbn').val(data.book[0].isbn);
+      $('#edit_title').val(data.book[0].title);
+      $('#catselect').val(data.book[0].category_id).html(data.book[0].name);
+      $('#edit_author').val(data.book[0].author);
+      $('#edit_publisher').val(data.book[0].publisher);
+      $('#datepicker_edit').val(data.book[0].publish_date);
+      $('#del_book').html(data.book[0].title);
+  
+});
+   
+})
+
+
+    
+
+  $(document).on('click', '.delete', function(e){
+    e.preventDefault();
+    $('#delete').modal('show');
+    var id = $(this).data('id');
+    
+    $('#confirm').on('click',function(e){
+        $.ajax({
+    url: ' http://127.0.0.1:8000/admin/books/delete/'+id,
+    type: 'DELETE',
+    success: function(result) {
+        location.reload(true);
+    }
+});
+    })
+});
+   
+
+
+
+
+
+
+</script>
+{% endblock %}

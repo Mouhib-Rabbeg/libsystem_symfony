@@ -151,11 +151,7 @@ $(function(){
     e.preventDefault();
     $('#edit').modal('show');
     var id = $(this).data('id');
-    $('#edit_cat').on('click',function(e){
-        
-         window.location = "http://127.0.0.1:8000/admin/category/edit/"+id+"/"+$('#edit_name').val()
-        
-    })
+
     
     
   });
@@ -164,15 +160,17 @@ $(function(){
     e.preventDefault();
     $('#delete').modal('show');
     var id = $(this).data('id');
-    $('#delet_me').on('click',function(e){
-        window.location = "http://127.0.0.1:8000/admin/category/delete/"+id
-    })
+    
     
    
     
   });
 });
 
+
+function getRow(id){
+  
+}
 
 </script>
 </body>
