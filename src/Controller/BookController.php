@@ -111,4 +111,25 @@ class BookController extends AbstractController
         return $this->redirectToRoute('admin/books');
 
     }
+    /**
+     * @Route("admin/books/add", name="book_add" , methods={"POST"})
+     */
+    public function addBook(Request $request){
+        $entityManager = $this->getDoctrine()->getManager();
+        $conn = $entityManager->getConnection(); 
+
+      
+		$isbn = $request->get('isbn');
+		$title = $request->get('title');
+		$category = $request->get('category');
+		$author = $request->get('author');
+		$publisher = $request->get('publisher');
+		$pub_date = $request->get('pub_date');
+        $sql = "INSERT INTO books (isbn, category_id, title, author, publisher, publish_date) VALUES ('$isbn', '$category', '$title', '$author', '$publisher', '$pub_date')";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+
+        return $this->redirectToRoute('admin/books');
+
+    }
 }
